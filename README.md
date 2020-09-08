@@ -6,8 +6,8 @@ Most of the Raspberry Pi Zero daughter boards that I've designed include a softw
 Prime examples of this kind of board are [PowerBoard](http://github.com/jdimpson/PowerBoard) and [PowerHolder](http://github.com/jdimpson/PowerHolder).
 
 Given this hardware baseline, I wrote the first version of code that became powerboard.py, that roughly implemented the following functionality:
->
 > When running from boot, pulse until wifi gets link
+
 >                      then off after wifi gets link
 > When button is short pressed, toggle solid LED on/off
 > When button is long pressed (>=5 sec), flash until by poweroff
