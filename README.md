@@ -8,12 +8,12 @@ Prime examples of this kind of board are [PowerBoard](http://github.com/jdimpson
 Given this hardware baseline, I wrote the first version of code that became powerboard.py, that roughly implemented the following functionality:
 >
 > When running from boot, pulse until wifi gets link
-> #                      then off after wifi gets link
-> # When button is short pressed, toggle solid LED on/off
-> # When button is long pressed (>=5 sec), flash until by poweroff
-> # When low battery is asserted, flash for 60 secs, continue flash until poweroff
-> # Poweroff overrules low battery overrules short button overrules wifi state
-> ###
+>                      then off after wifi gets link
+> When button is short pressed, toggle solid LED on/off
+> When button is long pressed (>=5 sec), flash until by poweroff
+> When low battery is asserted, flash for 60 secs, continue flash until poweroff
+> Poweroff overrules low battery overrules short button overrules wifi state
+>
 
 THe WiFi flash functionality is currently commented out because it annoyed me, and added a grace period which will stop the shutdown countdown if external power is acquired.
 
