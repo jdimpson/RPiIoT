@@ -1,9 +1,9 @@
 # RPiIoT
 Assorted Python modules for Raspberry Pi automation / Internet of Things
 
-Most of the Raspberry Pi Zero daughter boards that I've designed include a software controllable LED and tactile pushbutton, and many of them include a battery controller and charge circuit that can send a signal when the battery voltage has dropped below a level at which point the controller will generate a signal that can be used monitored by an RPi to cause it to shutdown.
+Most of the Raspberry Pi Zero daughter boards that I've designed include a software controllable LED and tactile pushbutton, and many of them include a battery controller and charge circuit that can send a signal when the battery voltage has dropped below a level at which point the controller will generate a signal that can be used monitored by an RPi to cause it to shutdown. (The [AdaFruit PowerBoost 1000C](https://www.adafruit.com/product/2465) can do this. Remember to use a level shifter.)
 
-Prime examples of this kind of board are [PowerBoard](http://github.com/jdimpson/PowerBoard) and [PowerHolder](http://github.com/jdimpson/PowerHolder).
+Prime examples of this kind of board are [PowerBoard](http://github.com/jdimpson/PowerBoard) and [PowerHolder](http://github.com/jdimpson/PowerHolder) PCB projects. This code also works with [FitFullBoard](http://github.com/jdimpson/FitFullBoard), which doesn't have a battery but does send a shutdown signal to the RPi with the intention of it shutting down.
 
 Given this hardware baseline, I wrote the first version of code that became powerboard.py, that roughly implemented the following functionality:
 > When running from boot, pulse until wifi gets link  
@@ -14,6 +14,8 @@ Given this hardware baseline, I wrote the first version of code that became powe
 > Poweroff overrules low battery overrules short button overrules wifi state  
 
 THe WiFi flash functionality is currently commented out because it annoyed me, and added a grace period which will stop the shutdown countdown if external power is acquired.
+
+The contents of this repo are currently limited to the code required to driving the indication and battery monitoring  PCB projects listed above, but as I release more boards that do other things, I'll add to this collection.
 
 * [powerboard.py](./powerboard.py) - Primarily used as a command-line tool that implements the algorithm described above. Needs a little work before it can be used as a module.
 * [multibutton.py](./multibutton.py) - Button class that lets you register callbacks for single clicks, double clicks, short clicks, and long clicks.
