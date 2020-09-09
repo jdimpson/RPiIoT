@@ -157,6 +157,7 @@ class multibutton(object):
 		return "<{cls} pin {p}>".format(cls=self.__class__.__name__, p=self.pin)
 
 def alert(m="Alert! There is no alert."):
+	print(m)
 	call(["wall",m])
 
 def poweroff(sec=3):
