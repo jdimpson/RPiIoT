@@ -5,19 +5,9 @@ Most of the Raspberry Pi Zero daughter boards that I've designed include a softw
 
 Prime examples of this kind of board are [PowerBoard](http://github.com/jdimpson/PowerBoard) and [PowerHolder](http://github.com/jdimpson/PowerHolder) PCB projects. This code also works with [FitFullBoard](http://github.com/jdimpson/FitFullBoard), which doesn't have a battery but does send a shutdown signal to the RPi with the intention of it shutting down.
 
-Given this hardware baseline, I wrote the first version of code that became powerboard.py, that roughly implemented the following functionality:
-> When running from boot, pulse until wifi gets link  
->                      then off after wifi gets link  
-> When button is short pressed, toggle solid LED on/off  
-> When button is long pressed (>=5 sec), flash until by poweroff  
-> When low battery is asserted, flash for 60 secs, continue flash until poweroff  
-> Poweroff overrules low battery overrules short button overrules wifi state  
-
-THe WiFi flash functionality is currently commented out because it annoyed me, and added a grace period which will stop the shutdown countdown if external power is acquired.
-
 The contents of this repo are currently limited to the code required to driving the indication and battery monitoring  PCB projects listed above, but as I release more boards that do other things, I'll add to this collection.
 
-* [powerboard.py](./powerboard.py) - Primarily used as a command-line tool that implements the algorithm described above. Needs a little work before it can be used as a module.
+* [powerboard.py](./powerboard.py) - Primarily used as a command-line tool that implements functionality to monitor button presses, controls LED, and monitor the low battery signal, entering grace period and shutting down as needed. Needs a little work before it can be used as a module. [See wiki entry for documentation](https://github.com/jdimpson/RPiIoT/wiki/powerboard.py).
 * [multibutton.py](./multibutton.py) - Button class that lets you register callbacks for single clicks, double clicks, short clicks, and long clicks.
 * [lbo.py](./lbo.py) - Threaded class that monitors a GPIO port. When the port is high, assume battery is OK. When port goes low, assumes that battery power level has gone too low. It will wait some grace period time before executing the shutdown command. If the port goes high again during the grace period, the shutdown countdown is cancelled. If when the code is first run the port is not high, the monitor thread will exit, assuming the unit is not being run off of a battery.
 * [netinfo.py](./netinfo.py) - Various utility functions to check network configuration and state.
