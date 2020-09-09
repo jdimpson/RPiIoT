@@ -7,10 +7,11 @@ from threading	import Thread
 from os		import access, X_OK
 
 from multibutton import multibutton
-from lbo import lbo
-from netinfo import netinfo,wpainfo
-from netctrl import ifup,ifdown,wpa_reassociate
-from wall    import alert,popup
+from lbo         import lbo
+from netinfo     import netinfo,wpainfo
+from netctrl     import ifup,ifdown,wpa_reassociate
+from wall        import alert,popup
+from kvgetopts   import kvgetopts
 
 ###
 # When running from boot, pulse until wifi gets link
@@ -153,34 +154,24 @@ if __name__ == "__main__":
 	long_flash_cb = pb.findcb("ledblink")
 
 	if len(argv) > 1:
-		for a in argv[1:]:
-			e=a.find("=")
-			if e == -1:
-				p=None
-			else:
-				try:
-					p=int(a[e+1:])
-				except: 
-					p=a[e+1:]
-			if   a.startswith("grace="):
-				pb.grace = p
-			elif a.startswith("led="):
-				ledpin = p
-			elif a.startswith("but=") or a.startswith("butt="):
-				butpin = p
-			elif a.startswith("lbo="):
-				lbopin = p
-			elif a.startswith("long="):
-				longcb = pb.findcb(p)
-			elif a.startswith("triple="):
-				triplecb = pb.findcb(p)
-			elif a.startswith("double="):
-				doublecb = pb.findcb(p)
-			elif a.startswith("medium="):
-				mediumcb = pb.findcb(p)
-			elif a.startswith("single="):
-				shortcb = pb.findcb(p)
-			elif a.startswith("active"):
+		opts = kvgetopts(argv)
+		ledpin = opts.get('led',ledpin)
+		butpin = opts.get('but',butpin)
+		lbopin = opts.get('lbo',lbopin)
+		pb.grace = opts.get('grace',None)
+		tmp = opts.get('long',None)
+		if tmp is not None: longcb = pb.findcb(tmp)
+		tmp = opts.get('triple',None)
+		if tmp is not None: triplecb = pb.findcb(tmp)
+		tmp = opts.get('double',None)
+		if tmp is not None: doublecb = pb.findcb(tmp)
+		tmp = opts.get('medium',None)
+		if tmp is not None: mediumcb = pb.findcb(tmp)
+		tmp = opts.get('short',None)
+		if tmp is not None: shortcb = pb.findcb(tmp)
+
+		for a in opts.remains[1:]:	# skip name of executable
+			if a.startswith("active"):
 				if "low" in a:
 					active_high = False
 				elif "high" in a:
@@ -193,11 +184,14 @@ if __name__ == "__main__":
 				ackpress=True
 			else:
 				raise RuntimeError("Unrecognized argument {}".format(a))
-	else:
+
+
+	if ledpin is None and butpin is None and lbopin is None:
 		# These happen to be the pins as used by powerboard v2.0
 		ledpin = 27
 		butpin = 17
 		lbopin = 26
+
 	print "led={l} but={b} lbo={o}".format(l=ledpin,b=butpin,o=lbopin)
 
 
