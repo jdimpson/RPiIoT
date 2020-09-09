@@ -15,7 +15,7 @@ Given this hardware baseline, I wrote the first version of code that became powe
 
 THe WiFi flash functionality is currently commented out because it annoyed me, and added a grace period which will stop the shutdown countdown if external power is acquired.
 
-* [powerboard.py](./powerboard.py) - Primarily used as a command-line tool that implements the algorithm described above.
+* [powerboard.py](./powerboard.py) - Primarily used as a command-line tool that implements the algorithm described above. Needs a little work before it can be used as a module.
 * [multibutton.py](./multibutton.py) - Button class that lets you register callbacks for single clicks, double clicks, short clicks, and long clicks.
 * [lbo.py](./lbo.py) - Threaded class that monitors a GPIO port. When the port is high, assume battery is OK. When port goes low, assumes that battery power level has gone too low. It will wait some grace period time before executing the shutdown command. If the port goes high again during the grace period, the shutdown countdown is cancelled. If when the code is first run the port is not high, the monitor thread will exit, assuming the unit is not being run off of a battery.
 * [netinfo.py](./netinfo.py) - Various utility functions to check network configuration and state.
