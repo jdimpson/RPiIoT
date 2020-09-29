@@ -13,6 +13,7 @@ The contents of this repo are currently limited to the code required to driving 
 * [netinfo.py](./netinfo.py) - Various utility functions to check network configuration and state.
 * [netctrl.py](./netctrl.py) - Various utility functions to change network configuration and state.
 * [wall.py](./wall.py) - A class that wraps around the classic Unix "wall" command, including an option to pop-up a message in an X-WIndows environment.
+* [udisk.py](./udisk.py) - A class that wraps around "udisksctl" (and thus dependant on the "udisksd" service) and can be used to watch for disk drive mount and removable media insertion events.
 * [kvgetopts.py](./kvgetopts.py) - My own version of getopts, which parses argv full of "key=value" command line arguments.
 
 Mosto of these require the gpiozero python library. They are currently python 2, so you definitely shouldn't use them. Most of these libraries can be executed directly on the command line, either being useful on their own, or serving as test / example code for using the library.
